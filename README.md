@@ -6,6 +6,21 @@ It is (only exception being the constructor) API-compatible
 with `CalendariumRomanum::Calendar`, but obtains the data
 from a [remote calendar API][calapi] instead of computing them.
 
+## Usage
+
+Load by
+
+```
+require 'calendarium-romanum'
+require 'calendarium-romanum/remote'
+```
+
+or by a shortcut
+
+```
+require 'calendarium-romanum-remote'
+```
+
 ```ruby
 CR = CalendariumRomanum
 
@@ -13,7 +28,7 @@ CR = CalendariumRomanum
 calendar = CR::Remote::Calendar.new(2016, 'http://calapi.inadiutorium.cz/api/v0/en/calendars/general-la/')
 
 # use the same way as the normal Calendar, get the same return values
-day = calendar.get Date.new(2016, 12, 24)
+day = calendar.day Date.new(2016, 12, 24)
 ```
 
 [caro]: https://github.com/igneus/calendarium-romanum
