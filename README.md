@@ -31,5 +31,9 @@ calendar = CR::Remote::Calendar.new(2016, 'http://calapi.inadiutorium.cz/api/v0/
 day = calendar.day Date.new(2016, 12, 24)
 ```
 
+## License
+
+freely choose between GNU/LGPL 3 and MIT
+
 [caro]: https://github.com/igneus/calendarium-romanum
 [calapi]: https://github.com/igneus/church-calendar-api
