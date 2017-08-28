@@ -4,7 +4,7 @@ Gem::Specification.new do |s|
   s.name        = 'calendarium-romanum-remote'
   s.version     = CalendariumRomanum::Remote::VERSION
   s.date        = '0000-01-01'
-  s.summary     = 'calendarium-romanum remote calendar plug-in'
+  s.summary     = 'remote calendar extension for calendarium-romanum'
 
   s.description = 'obtains calendar data from an API'
 
