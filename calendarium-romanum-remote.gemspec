@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.homepage    = 'http://github.com/igneus/calendarium-romanum-remote'
   s.licenses    = ['LGPL-3.0', 'MIT']
 
-  s.add_dependency 'calendarium-romanum', '0.3.0'
+  s.add_dependency 'calendarium-romanum', '~> 0.3.0'
   s.add_development_dependency 'rake', '~> 12.0'
   s.add_development_dependency 'rspec', '~> 3.6'
 end
