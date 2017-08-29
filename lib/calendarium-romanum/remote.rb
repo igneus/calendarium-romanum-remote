@@ -10,6 +10,7 @@ version
 calendar
 drivers
 drivers/net_http_driver
+errors
 v0/deserializer
 ).each do |path|
   require_relative File.join('remote', path)

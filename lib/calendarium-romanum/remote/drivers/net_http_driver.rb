@@ -9,7 +9,21 @@ module CalendariumRomanum
             (calendar_uri.end_with?('/') ? '' : '/') +
             "#{date.year}/#{date.month}/#{date.day}"
           uri = URI(uri_str)
-          Net::HTTP.get uri
+
+          begin
+            response = Net::HTTP.get_response uri
+          rescue SocketError, Errno::ECONNREFUSED
+            raise ServerNotFoundError.new
+          end
+
+          if response.code == '200'
+            return response.body
+          elsif response.code == '400'
+            json = JSON.parse(response.body)
+            raise BadRequestError.new(json['error'])
+          else
+            raise RuntimeError.new("Unexpected status #{response.code.inspect}")
+          end
         end
       end
     end
