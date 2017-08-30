@@ -3,10 +3,10 @@ require 'spec_helper'
 describe CalendariumRomanum::Remote::Drivers do
   CRRem = CalendariumRomanum::Remote
 
-  shared_examples 'any driver' do
-    let(:base_uri) { REMOTE_CALENDAR_URI }
-    let(:date) { Date.new 2000, 1, 1 }
+  let(:base_uri) { REMOTE_CALENDAR_URI }
+  let(:date) { Date.new 2000, 1, 1 }
 
+  shared_examples 'any driver' do
     describe 'success' do
       it 'returns a string' do
         r = driver.get date, base_uri
@@ -71,6 +71,24 @@ describe CalendariumRomanum::Remote::Drivers do
     it_behaves_like 'any driver'
 
     # implementation-specific error handling
-    describe 'network error'
+    describe 'network error' do
+      [
+        Timeout::Error,
+        Errno::EINVAL,
+        Errno::ECONNRESET,
+        EOFError,
+        Net::HTTPBadResponse,
+        Net::HTTPHeaderSyntaxError,
+        Net::ProtocolError
+      ].each do |etype|
+        it 'fails' do
+          allow(Net::HTTP).to receive(:get_response).and_raise(etype)
+
+          expect do
+            driver.get date, base_uri
+          end.to raise_exception CRRem::TransportError
+        end
+      end
+    end
   end
 end

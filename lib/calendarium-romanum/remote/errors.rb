@@ -9,5 +9,7 @@ module CalendariumRomanum
 
     # server refuses submitted input
     class BadRequestError < Error; end
+
+    class TransportError < Error; end
   end
 end
