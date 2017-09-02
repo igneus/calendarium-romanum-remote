@@ -3,7 +3,7 @@ require_relative 'lib/calendarium-romanum/remote/version'
 Gem::Specification.new do |s|
   s.name        = 'calendarium-romanum-remote'
   s.version     = CalendariumRomanum::Remote::VERSION
-  s.date        = '0000-01-01'
+  s.date        = CalendariumRomanum::Remote::RELEASE_DATE.to_s
   s.summary     = 'remote calendar extension for calendarium-romanum'
 
   s.description = 'obtains calendar data from an API'
