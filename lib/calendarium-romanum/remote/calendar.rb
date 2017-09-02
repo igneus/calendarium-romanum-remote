@@ -6,6 +6,8 @@ module CalendariumRomanum
     # from a remote calendar API
     # https://github.com/igneus/church-calendar-api
     class Calendar
+      extend Forwardable
+
       def initialize(year, calendar_uri, api_version: :v0, driver: :net_http)
         @year = year
         @calendar_uri = calendar_uri
@@ -18,7 +20,19 @@ module CalendariumRomanum
             driver
           end
         @deserializer = V0::Deserializer.new
+
+        # only for most fundamental computations made locally
+        @temporale = Temporale.new(year)
+        # only for API compatibility
+        @sanctorale = nil
       end
+
+      attr_reader :year
+      attr_reader :temporale
+      attr_reader :sanctorale
+      attr_reader :calendar_uri
+
+      def_delegators :@temporale, :range_check, :season
 
       def day(*args)
         # TODO code copied from CalendariumRomanum::Calendar -
@@ -35,6 +49,26 @@ module CalendariumRomanum
 
         serialized = @driver.get date, @calendar_uri
         @deserializer.call serialized
+      end
+
+      def lectionary
+        year_spec['lectionary'].to_sym
+      end
+
+      def ferial_lectionary
+        year_spec['ferial_lectionary'].to_i
+      end
+
+      def ==(obj)
+        self.class == obj.class &&
+          self.year == obj.year &&
+          self.calendar_uri == obj.calendar_uri
+      end
+
+      private
+
+      def year_spec
+        @year_spec ||= JSON.parse(@driver.year(@year, @calendar_uri))
       end
     end
   end

@@ -10,6 +10,22 @@ module CalendariumRomanum
             "#{date.year}/#{date.month}/#{date.day}"
           uri = URI(uri_str)
 
+          get_request uri
+        end
+
+        def year(year, calendar_uri)
+          uri_str =
+            calendar_uri +
+            (calendar_uri.end_with?('/') ? '' : '/') +
+            year.to_s
+          uri = URI(uri_str)
+
+          get_request uri
+        end
+
+        private
+
+        def get_request(uri)
           begin
             response = Net::HTTP.get_response uri
           rescue SocketError, Errno::ECONNREFUSED => err
