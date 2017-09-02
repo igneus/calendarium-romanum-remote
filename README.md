@@ -1,5 +1,7 @@
 # calendarium-romanum-remote
 
+[![Gem Version](https://badge.fury.io/rb/calendarium-romanum-remote.svg)](https://badge.fury.io/rb/calendarium-romanum-remote)
+
 Extends [calendarium-romanum][caro] with a new class
 `CalendariumRomanum::Remote::Calendar`.
 It is (only exception being the constructor) API-compatible
