@@ -12,13 +12,13 @@ module CalendariumRomanum
 
           begin
             response = Net::HTTP.get_response uri
-          rescue SocketError, Errno::ECONNREFUSED
-            raise ServerNotFoundError.new
+          rescue SocketError, Errno::ECONNREFUSED => err
+            raise ServerNotFoundError.new err.message
           rescue Timeout::Error, Errno::EINVAL,
                  Errno::ECONNRESET, EOFError,
                  Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError,
-                 Net::ProtocolError
-            raise TransportError.new
+                 Net::ProtocolError => err
+            raise TransportError.new err.message
           end
 
           if response.code == '200'
