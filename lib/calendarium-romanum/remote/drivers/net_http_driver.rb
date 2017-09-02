@@ -27,7 +27,7 @@ module CalendariumRomanum
             json = JSON.parse(response.body)
             raise BadRequestError.new(json['error'])
           else
-            raise RuntimeError.new("Unexpected status #{response.code.inspect}")
+            raise Error.new("Unexpected status #{response.code.inspect}")
           end
         end
       end
