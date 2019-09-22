@@ -9,11 +9,11 @@ module CalendariumRomanum
         end
 
         def day(date)
-          URI(@calendar_uri + "#{date.year}/#{date.month}/#{date.day}")
+          @calendar_uri + "#{date.year}/#{date.month}/#{date.day}"
         end
 
         def year(year)
-          URI(@calendar_uri + year.to_s)
+          @calendar_uri + year.to_s
         end
       end
     end

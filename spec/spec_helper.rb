@@ -106,3 +106,5 @@ require_relative '../lib/calendarium-romanum-remote'
 
 REMOTE_CALENDAR_URI =
   ENV['REMOTE_CALENDAR'] || 'http://calapi.inadiutorium.cz/api/v0/en/calendars/general-en/'
+
+HTTPI.log = false

@@ -18,6 +18,8 @@ Gem::Specification.new do |s|
   s.licenses    = ['LGPL-3.0', 'MIT']
 
   s.add_dependency 'calendarium-romanum', '~> 0.4.0'
+  s.add_dependency 'httpi', '~> 2.0'
+  s.add_dependency 'multi_json', '~> 1.13'
   s.add_development_dependency 'rake', '~> 12.0'
   s.add_development_dependency 'rspec', '~> 3.6'
 end

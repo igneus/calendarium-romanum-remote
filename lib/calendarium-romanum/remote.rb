@@ -2,12 +2,17 @@ module CalendariumRomanum
   module Remote; end
 end
 
+require 'httpi'
+require 'multi_json'
+
+# TODO remove
 require 'net/http'
 require 'json'
 
 %w(
 version
 calendar
+driver
 drivers
 drivers/net_http_driver
 errors

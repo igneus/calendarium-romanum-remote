@@ -103,10 +103,10 @@ describe CalendariumRomanum::Remote::Calendar do
     describe 'server does not exist' do
       let(:uri) { 'http://does-not-exist.local/' }
 
-      it 'throws ServerNotFoundError' do
+      it 'throws SocketError' do
         expect do
           calendar.day date
-        end.to raise_exception CRRemote::ServerNotFoundError
+        end.to raise_exception ::SocketError
       end
     end
 
@@ -114,10 +114,10 @@ describe CalendariumRomanum::Remote::Calendar do
       let(:wrong_calendar_uri) { uri + 'another-path-segment/' }
       let(:calendar) { described_class.new year, wrong_calendar_uri }
 
-      it 'throws ServerNotFoundError' do
+      it 'throws CalendariumRomanum::Remote::Error' do
         expect do
           calendar.day date
-        end.to raise_exception CRRemote::Error, /Unexpected status "404"/
+        end.to raise_exception CRRemote::Error, /Unexpected HTTP status 404/
       end
     end
   end

@@ -8,19 +8,16 @@ module CalendariumRomanum
     class Calendar
       extend Forwardable
 
-      def initialize(year, calendar_uri, api_version: :v0, driver: :net_http)
+      def initialize(year, calendar_uri, driver: nil)
         @year = year
         @calendar_uri = calendar_uri
+
         @driver =
-          if driver.is_a? Symbol
-            # built-in driver specified by a Symbol
-            Drivers.get(api_version, driver)
-          else
-            # driver instance
-            driver
-          end
-        @deserializer = V0::Deserializer.new
-        @uri_scheme = V0::UriScheme.new calendar_uri
+          driver ||
+          Driver.new(
+            V0::UriScheme.new(calendar_uri),
+            V0::Deserializer.new
+          )
 
         # only for most fundamental computations made locally
         @temporale = Temporale.new(year)
@@ -48,8 +45,7 @@ module CalendariumRomanum
           #range_check date
         end
 
-        serialized = @driver.get date, @uri_scheme
-        @deserializer.call serialized
+        @driver.day date
       end
 
       def lectionary
@@ -69,7 +65,7 @@ module CalendariumRomanum
       private
 
       def year_spec
-        @year_spec ||= JSON.parse(@driver.year(@year, @uri_scheme))
+        @year_spec ||= @driver.year(@year)
       end
     end
   end

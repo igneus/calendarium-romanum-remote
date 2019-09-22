@@ -2,16 +2,14 @@ module CalendariumRomanum
   module Remote
     module V0
       class Deserializer
-        def call(day_str)
-          parsed = JSON.parse day_str
-
-          season_sym = parsed['season'].to_sym
+        def day(day_json)
+          season_sym = day_json['season'].to_sym
 
           CalendariumRomanum::Day.new(
-            date: Date.parse(parsed['date']),
+            date: Date.parse(day_json['date']),
             season: CalendariumRomanum::Seasons.all.find {|s| s.symbol == season_sym},
-            season_week: parsed['season_week'],
-            celebrations: parsed['celebrations'].collect do |c|
+            season_week: day_json['season_week'],
+            celebrations: day_json['celebrations'].collect do |c|
               colour_sym = c['colour'].to_sym
 
               CalendariumRomanum::Celebration.new(
@@ -21,6 +19,11 @@ module CalendariumRomanum
               )
             end
           )
+        end
+
+        def year(year_json)
+          # no denormalization takes place
+          year_json
         end
       end
     end

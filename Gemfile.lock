@@ -4,6 +4,7 @@ PATH
     calendarium-romanum-remote (0.1.0)
       calendarium-romanum (~> 0.4.0)
       httpi (~> 2.0)
+      multi_json (~> 1.13)
 
 GEM
   remote: https://rubygems.org/
@@ -21,6 +22,7 @@ GEM
     i18n (0.9.5)
       concurrent-ruby (~> 1.0)
     json (2.1.0)
+    multi_json (1.13.1)
     rack (2.0.7)
     rake (12.0.0)
     roman-numerals (0.3.0)

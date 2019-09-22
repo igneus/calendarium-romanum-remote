@@ -4,11 +4,11 @@ module CalendariumRomanum
       # Communicates with the remote API using Ruby standard library
       class NetHttpDriver
         def get(date, uri_scheme)
-          get_request uri_scheme.day date
+          get_request URI uri_scheme.day date
         end
 
         def year(year, uri_scheme)
-          get_request uri_scheme.year year
+          get_request URI uri_scheme.year year
         end
 
         private
