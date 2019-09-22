@@ -3,6 +3,8 @@ module CalendariumRomanum
     module V0
       class Deserializer
         def day(day_json)
+          check day_json, DaySchema
+
           season_sym = day_json['season'].to_sym
 
           CalendariumRomanum::Day.new(
@@ -22,8 +24,36 @@ module CalendariumRomanum
         end
 
         def year(year_json)
+          check year_json, YearSchema
+
           # no denormalization takes place
           year_json
+        end
+
+        protected
+
+        def check(data, schema)
+          errors = schema.call(data).errors
+
+          unless errors.empty?
+            raise InvalidDataError.new "Invalid data: #{errors.to_h}"
+          end
+        end
+
+        DaySchema = Dry::Schema.JSON do
+          required(:date).filled(:string, format?: /^\d{4}-\d{2}-\d{2}$/)
+          required(:season).filled(:string)
+          required(:season_week).filled(:integer)
+          required(:celebrations).array(:hash) do
+            required(:title).filled(:string)
+            required(:colour).filled(:string)
+            required(:rank_num).filled(:float)
+          end
+        end
+
+        YearSchema = Dry::Schema.JSON do
+          required(:lectionary).filled(:string, included_in?: %w(A B C))
+          required(:ferial_lectionary).filled(:integer, included_in?: [1, 2])
         end
       end
     end

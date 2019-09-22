@@ -141,5 +141,17 @@ describe CalendariumRomanum::Remote::Calendar do
         end.to raise_exception CRRemote::UnexpectedResponseError, /Unexpected HTTP status 400/
       end
     end
+
+    describe 'unsupported response content' do
+      it 'fails' do
+        # HTTP request will return empty JSON
+        response = HTTPI::Response.new 200, {}, '{}'
+        allow(HTTPI).to receive(:get).and_return(response)
+
+        expect do
+          calendar.day date
+        end.to raise_exception CRRemote::InvalidDataError, /Invalid data: {:date=>\["is missing"/
+      end
+    end
   end
 end

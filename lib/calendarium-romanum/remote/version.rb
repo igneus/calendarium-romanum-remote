@@ -1,3 +1,5 @@
+require 'date'
+
 module CalendariumRomanum
   module Remote
     VERSION = '0.1.0'

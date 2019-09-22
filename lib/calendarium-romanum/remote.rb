@@ -4,6 +4,7 @@ end
 
 require 'httpi'
 require 'multi_json'
+require 'dry-schema'
 
 %w(
 version
