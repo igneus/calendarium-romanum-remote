@@ -16,7 +16,7 @@ module CalendariumRomanum
           driver ||
           Driver.new(
             V0::UriScheme.new(calendar_uri),
-            V0::Deserializer.new
+            V0::Denormalizer.new
           )
 
         # only for most fundamental computations made locally

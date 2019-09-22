@@ -1,7 +1,7 @@
 module CalendariumRomanum
   module Remote
     module V0
-      class Deserializer
+      class Denormalizer
         def day(day_json)
           check day_json, DaySchema
 

@@ -11,7 +11,7 @@ version
 calendar
 driver
 errors
-v0/deserializer
+v0/denormalizer
 v0/uri_scheme
 ).each do |path|
   require_relative File.join('remote', path)
