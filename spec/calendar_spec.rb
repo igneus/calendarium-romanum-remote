@@ -2,7 +2,7 @@ require_relative 'spec_helper'
 
 describe CalendariumRomanum::Remote::Calendar do
   CR = CalendariumRomanum
-  CRR = CalendariumRomanum::Remote
+  CRRemote = CalendariumRomanum::Remote
 
   let(:year) { 2016 }
   let(:uri) { REMOTE_CALENDAR_URI }
@@ -51,15 +51,13 @@ describe CalendariumRomanum::Remote::Calendar do
   end
 
   describe 'API-compatibility with Calendar' do
-    cls = CR::Calendar
-
     describe 'instance methods' do
       let(:year) { 2000 }
 
       let(:origin) { CR::Calendar.new(year) }
-      let(:mirror) { CRR::Calendar.new(year, uri) }
+      let(:mirror) { CRRemote::Calendar.new(year, uri) }
 
-      cls.public_instance_methods.each do |method|
+      CR::Calendar.public_instance_methods.each do |method|
         describe method do
           it 'is defined by origin' do
             expect(origin).to respond_to method
