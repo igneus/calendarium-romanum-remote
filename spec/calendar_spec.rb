@@ -5,12 +5,13 @@ describe CalendariumRomanum::Remote::Calendar do
   CRR = CalendariumRomanum::Remote
 
   let(:year) { 2016 }
-  let(:calendar) { described_class.new year, REMOTE_CALENDAR_URI }
+  let(:uri) { REMOTE_CALENDAR_URI }
+  let(:calendar) { described_class.new year, uri }
 
   describe '#year' do
     it 'returns the year passed to the constructor' do
       y = 2200
-      cal = described_class.new y, REMOTE_CALENDAR_URI
+      cal = described_class.new y, uri
       expect(cal.year).to eq y
     end
   end
@@ -25,7 +26,7 @@ describe CalendariumRomanum::Remote::Calendar do
 
   describe '#==' do
     describe 'same year and URI' do
-      let(:c) { described_class.new year, REMOTE_CALENDAR_URI }
+      let(:c) { described_class.new year, uri }
 
       it 'is same' do
         expect(c == calendar).to be true
@@ -33,7 +34,7 @@ describe CalendariumRomanum::Remote::Calendar do
     end
 
     describe 'year differs' do
-      let(:c) { described_class.new year + 1, REMOTE_CALENDAR_URI }
+      let(:c) { described_class.new year + 1, uri }
 
       it 'is different' do
         expect(c == calendar).to be false
@@ -56,7 +57,7 @@ describe CalendariumRomanum::Remote::Calendar do
       let(:year) { 2000 }
 
       let(:origin) { CR::Calendar.new(year) }
-      let(:mirror) { CRR::Calendar.new(year, REMOTE_CALENDAR_URI) }
+      let(:mirror) { CRR::Calendar.new(year, uri) }
 
       cls.public_instance_methods.each do |method|
         describe method do
@@ -81,21 +82,17 @@ describe CalendariumRomanum::Remote::Calendar do
   end
 
   describe 'returns the same data as Calendar' do
-    let(:year) { 2016 }
-
-    # classical calendar
+    # classical calendar with the same settings as `calendar`
     let(:sanctorale) { CR::Data::GENERAL_ROMAN_ENGLISH.load }
-    let(:calendar) { CR::Calendar.new(year, sanctorale) }
+    let(:local_calendar) { CR::Calendar.new(year, sanctorale) }
 
-    # remote calendar with the same settings
-    let(:uri) { REMOTE_CALENDAR_URI }
-    let(:remote) { described_class.new(year, uri) }
+    let(:remote_calendar) { calendar }
 
     days = (CR::Temporale::Dates.first_advent_sunday(2016) ... CR::Temporale::Dates.first_advent_sunday(2017))
       days.each do |date|
       it date do
-        c = calendar.day date
-        r = remote.day date
+        c = local_calendar.day date
+        r = remote_calendar.day date
 
         expect(r).to eq c
       end
