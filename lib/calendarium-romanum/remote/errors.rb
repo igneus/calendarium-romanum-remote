@@ -4,12 +4,8 @@ module CalendariumRomanum
     # never itself instantiated
     class Error < ::RuntimeError; end
 
-    # server not found
-    class ServerNotFoundError < Error; end
-
-    # server refuses submitted input
-    class BadRequestError < Error; end
-
-    class TransportError < Error; end
+    # the server responded with a response which cannot be
+    # transformed to valid calendar data
+    class UnexpectedResponseError < Error; end
   end
 end

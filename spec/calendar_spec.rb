@@ -116,10 +116,10 @@ describe CalendariumRomanum::Remote::Calendar do
       let(:wrong_calendar_uri) { uri + 'another-path-segment/' }
       let(:calendar) { described_class.new year, wrong_calendar_uri }
 
-      it 'throws CalendariumRomanum::Remote::Error' do
+      it 'throws CalendariumRomanum::Remote::UnexpectedResponseError' do
         expect do
           calendar.day date
-        end.to raise_exception CRRemote::Error, /Unexpected HTTP status 404/
+        end.to raise_exception CRRemote::UnexpectedResponseError, /Unexpected HTTP status 404/
       end
     end
 
@@ -135,10 +135,10 @@ describe CalendariumRomanum::Remote::Calendar do
         d
       end
 
-      it 'fails' do
+      it 'throws CalendariumRomanum::Remote::UnexpectedResponseError' do
         expect do
           calendar.day date
-        end.to raise_exception CRRemote::Error, /Unexpected HTTP status 400/
+        end.to raise_exception CRRemote::UnexpectedResponseError, /Unexpected HTTP status 400/
       end
     end
   end

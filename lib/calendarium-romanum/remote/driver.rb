@@ -39,7 +39,7 @@ module CalendariumRomanum
 
       def handle_errors(response)
         if response.code != 200
-          raise Error.new("Unexpected HTTP status #{response.code.inspect}")
+          raise UnexpectedResponseError.new("Unexpected HTTP status #{response.code.inspect}")
         end
       end
     end
