@@ -1,5 +1,7 @@
 require_relative 'spec_helper'
 
+# integration tests exercizing the whole stack and
+# making (a lot of) actual HTTP requests!
 describe CalendariumRomanum::Remote::Calendar do
   CR = CalendariumRomanum
   CRRemote = CalendariumRomanum::Remote
@@ -118,6 +120,25 @@ describe CalendariumRomanum::Remote::Calendar do
         expect do
           calendar.day date
         end.to raise_exception CRRemote::Error, /Unexpected HTTP status 404/
+      end
+    end
+
+    describe 'bad request - invalid date' do
+      # this shouldn't ever happen, but it's the easiest way
+      # to check how the calendar behaves in bad request scenarios
+      let(:date) do
+        d = Date.new
+        d.stub(:year) { 2000 }
+        d.stub(:month) { 13 }
+        d.stub(:day) { 40 }
+
+        d
+      end
+
+      it 'fails' do
+        expect do
+          calendar.day date
+        end.to raise_exception CRRemote::Error, /Unexpected HTTP status 400/
       end
     end
   end
