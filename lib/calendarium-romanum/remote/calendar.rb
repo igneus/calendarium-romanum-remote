@@ -20,6 +20,7 @@ module CalendariumRomanum
             driver
           end
         @deserializer = V0::Deserializer.new
+        @uri_scheme = V0::UriScheme.new calendar_uri
 
         # only for most fundamental computations made locally
         @temporale = Temporale.new(year)
@@ -47,7 +48,7 @@ module CalendariumRomanum
           #range_check date
         end
 
-        serialized = @driver.get date, @calendar_uri
+        serialized = @driver.get date, @uri_scheme
         @deserializer.call serialized
       end
 
@@ -68,7 +69,7 @@ module CalendariumRomanum
       private
 
       def year_spec
-        @year_spec ||= JSON.parse(@driver.year(@year, @calendar_uri))
+        @year_spec ||= JSON.parse(@driver.year(@year, @uri_scheme))
       end
     end
   end

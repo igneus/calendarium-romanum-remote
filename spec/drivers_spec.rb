@@ -4,18 +4,19 @@ describe CalendariumRomanum::Remote::Drivers do
   CRRem = CalendariumRomanum::Remote
 
   let(:base_uri) { REMOTE_CALENDAR_URI }
+  let(:uri_scheme) { CRRem::V0::UriScheme.new base_uri }
   let(:date) { Date.new 2000, 1, 1 }
 
   shared_examples 'any driver' do
     describe 'success' do
       it 'returns a string' do
-        r = driver.get date, base_uri
+        r = driver.get date, uri_scheme
         expect(r).to be_a String
         expect(r).not_to be_empty
       end
 
       it 'returns a valid JSON' do
-        r = driver.get date, base_uri
+        r = driver.get date, uri_scheme
         expect do
           JSON.parse(r)
         end.not_to raise_exception
@@ -27,7 +28,7 @@ describe CalendariumRomanum::Remote::Drivers do
 
       it 'fails' do
         expect do
-          driver.get date, base_uri
+          driver.get date, uri_scheme
         end.to raise_exception CRRem::ServerNotFoundError
       end
     end
@@ -37,7 +38,7 @@ describe CalendariumRomanum::Remote::Drivers do
 
       it 'fails' do
         expect do
-          driver.get date, base_uri
+          driver.get date, uri_scheme
         end.to raise_exception CRRem::ServerNotFoundError
       end
     end
@@ -47,7 +48,7 @@ describe CalendariumRomanum::Remote::Drivers do
 
       it 'fails' do
         expect do
-          driver.get date, base_uri
+          driver.get date, uri_scheme
         end.to raise_exception CRRem::BadRequestError
       end
     end
@@ -59,7 +60,7 @@ describe CalendariumRomanum::Remote::Drivers do
 
       it 'fails' do
         expect do
-          driver.get date, base_uri
+          driver.get date, uri_scheme
         end.to raise_exception CRRem::BadRequestError
       end
     end
@@ -85,7 +86,7 @@ describe CalendariumRomanum::Remote::Drivers do
           allow(Net::HTTP).to receive(:get_response).and_raise(etype)
 
           expect do
-            driver.get date, base_uri
+            driver.get date, uri_scheme
           end.to raise_exception CRRem::TransportError
         end
       end

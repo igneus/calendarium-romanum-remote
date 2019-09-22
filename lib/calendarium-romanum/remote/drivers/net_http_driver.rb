@@ -3,24 +3,12 @@ module CalendariumRomanum
     module Drivers
       # Communicates with the remote API using Ruby standard library
       class NetHttpDriver
-        def get(date, calendar_uri)
-          uri_str =
-            calendar_uri +
-            (calendar_uri.end_with?('/') ? '' : '/') +
-            "#{date.year}/#{date.month}/#{date.day}"
-          uri = URI(uri_str)
-
-          get_request uri
+        def get(date, uri_scheme)
+          get_request uri_scheme.day date
         end
 
-        def year(year, calendar_uri)
-          uri_str =
-            calendar_uri +
-            (calendar_uri.end_with?('/') ? '' : '/') +
-            year.to_s
-          uri = URI(uri_str)
-
-          get_request uri
+        def year(year, uri_scheme)
+          get_request uri_scheme.year year
         end
 
         private

@@ -12,6 +12,7 @@ drivers
 drivers/net_http_driver
 errors
 v0/deserializer
+v0/uri_scheme
 ).each do |path|
   require_relative File.join('remote', path)
 end
