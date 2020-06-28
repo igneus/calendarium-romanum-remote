@@ -98,7 +98,21 @@ describe CalendariumRomanum::Remote::Calendar do
         c = local_calendar.day date
         r = remote_calendar.day date
 
-        expect(r).to eq c
+        # we cannot use simple `r == c` here,
+        # only a subset of properties is equal
+        %i(date season season_week weekday).each do |property|
+          expect(r.public_send(property))
+            .to eq c.public_send(property)
+        end
+
+        expect(r.celebrations.size).to eq c.celebrations.size
+
+        r.celebrations.each_with_index do |x,i|
+          %i(title rank colour).each do |property|
+            expect(r.celebrations[i].public_send(property))
+              .to eq c.celebrations[i].public_send(property)
+          end
+        end
       end
     end
   end
