@@ -81,6 +81,10 @@ describe CalendariumRomanum::Remote::Calendar do
     end
   end
 
+  # Note: this section only makes sense if we are sure
+  # that the API instance the tests run against has the very same
+  # version of calendarium-romanum (and bundled data files)
+  # as we have.
   describe 'returns the same data as Calendar' do
     # classical calendar with the same settings as `calendar`
     let(:sanctorale) { CR::Data::GENERAL_ROMAN_ENGLISH.load }
