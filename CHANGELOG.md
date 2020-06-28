@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.3.0] 2020-06-28
+
+### Added
+
+* `Calendar` methods for API compatibility with calendarium-romanum
+  up to 0.7.0
+
+### Changed
+
+* calendarium-romanum version requirements loosened
+
 ## [0.2.0] 2019-09-22
 
 ### Added
