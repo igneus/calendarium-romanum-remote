@@ -32,7 +32,15 @@ module CalendariumRomanum
 
       def_delegators :@temporale, :range_check, :season
 
-      def day(*args)
+      def populates_vespers?
+        false
+      end
+
+      def day(*args, vespers: false)
+        if vespers != false
+          throw ArgumentError.new('Vespers data supported, but this implementation currently doesn\'t support computing vespers.')
+        end
+
         # TODO code copied from CalendariumRomanum::Calendar -
         # extract to a separate method
         if args.size == 2
@@ -48,6 +56,23 @@ module CalendariumRomanum
         @driver.day date
       end
 
+      # TODO literally copied from CalendariumRomanum::Calendar
+      def [](args)
+        if args.is_a?(Range)
+          args.map {|date| day(date) }
+        else
+          day(args)
+        end
+      end
+
+      # TODO literally copied from CalendariumRomanum::Calendar
+      def each
+        return to_enum(__method__) unless block_given?
+
+        temporale.date_range
+          .each {|date| yield(day(date)) }
+      end
+
       def lectionary
         year_spec['lectionary'].to_sym
       end
@@ -56,10 +81,10 @@ module CalendariumRomanum
         year_spec['ferial_lectionary'].to_i
       end
 
-      def ==(obj)
-        self.class == obj.class &&
-          self.year == obj.year &&
-          self.calendar_uri == obj.calendar_uri
+      def ==(b)
+        self.class == b.class &&
+          self.year == b.year &&
+          self.calendar_uri == b.calendar_uri
       end
 
       private
