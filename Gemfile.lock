@@ -59,7 +59,7 @@ GEM
       concurrent-ruby (~> 1.0)
     json (2.1.0)
     multi_json (1.14.1)
-    rack (2.2.3)
+    rack (2.2.3.1)
     rake (12.0.0)
     roman-numerals (0.3.0)
     rspec (3.6.0)
