@@ -25,14 +25,14 @@ instead of building a regular `Calendar` in your application.
 
 Load by
 
-```
+```ruby
 require 'calendarium-romanum'
 require 'calendarium-romanum/remote'
 ```
 
 or by a shortcut
 
-```
+```ruby
 require 'calendarium-romanum-remote'
 ```
 
@@ -64,7 +64,7 @@ rescue CR::Remote::InvalidDataError => err
   # data returned by the server were not understood
 rescue HTTPI::Error
   # parent class of lower-level network errors raised by HTTPI -
-  # see it's documentation or source for the specific exception
+  # see its documentation or source for the specific exception
   # classes
 end
 ```
@@ -84,7 +84,7 @@ what options you have and how to make use of them.
 The following example configures `curb` to be used internally
 as HTTP client and `oj` as JSON deserializer.
 
-```
+```ruby
 require 'curb'
 require 'oj'
 require 'calendarium-romanum-remote'
